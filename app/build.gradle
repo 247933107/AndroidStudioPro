@@ -32,6 +32,7 @@ android {
             keyPassword RELEASE_KEY_PASSWORD
         }
     }
+    def EXCLUDE_JAR_LIST = [ 'ptr-lib']
     buildTypes {
         debug {
             // 显示Log
@@ -92,6 +93,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.+'
     compile 'com.facebook.fresco:fresco:0.9.0+'
-    compile files('libs/retrofit-2.0.0-beta4.jar')
+//    compile files('libs/retrofit-2.0.0-beta4.jar')
     compile files('libs/Volley.jar')
+    compile project(path: ':ptr-lib')
 }

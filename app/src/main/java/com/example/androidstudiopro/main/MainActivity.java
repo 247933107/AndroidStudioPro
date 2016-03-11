@@ -1,28 +1,24 @@
 package com.example.androidstudiopro.main;
 
-import android.net.Uri;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
-import com.android.volley.VolleyError;
 import com.example.androidstudiopro.R;
 import com.example.androidstudiopro.base.BaseActivity;
-import com.example.androidstudiopro.intereface.VolleyInterface;
-import com.example.androidstudiopro.intereface.VolleyRequest;
-import com.example.androidstudiopro.model.GitHubService;
-import com.example.androidstudiopro.model.Jokers;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.example.androidstudiopro.fragment.JokerFragment;
+import com.example.androidstudiopro.fragment.PicFragment;
+import com.example.androidstudiopro.fragment.WechatFragment;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Retrofit;
-
-public class MainActivity extends BaseActivity {
-    private SimpleDraweeView mAnimatedGifView;
+public class MainActivity extends BaseActivity implements View.OnClickListener {
+    //    private SimpleDraweeView mAnimatedGifView;
+    private FragmentManager mFragmentManager;
+    private JokerFragment mJokerFragment;
+    private PicFragment mPicFragment;
+    private WechatFragment wechatFragment;
+    private TextView tv_1, tv_2, tv_3, tv_4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,44 +28,101 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
-        mAnimatedGifView = (SimpleDraweeView) findViewById(R.id.animated_gif);
-        DraweeController animatedGifController = Fresco.newDraweeControllerBuilder()
-                .setAutoPlayAnimations(true)
-                .setUri(Uri.parse("http://juheimg.oss-cn-hangzhou.aliyuncs.com/joke/201602/26/9CEC209CE521A3C710F151D1A7209823.gif"))
-                .build();
-        mAnimatedGifView.setController(animatedGifController);
+        mFragmentManager = getFragmentManager();
+        tv_1 = (TextView) findViewById(R.id.tv_1);
+        tv_2 = (TextView) findViewById(R.id.tv_2);
+        tv_3 = (TextView) findViewById(R.id.tv_3);
+        tv_4 = (TextView) findViewById(R.id.tv_4);
+        tv_1.setOnClickListener(this);
+        tv_2.setOnClickListener(this);
+        tv_3.setOnClickListener(this);
+        tv_4.setOnClickListener(this);
+
+
+//        mAnimatedGifView = (SimpleDraweeView) findViewById(R.id.animated_gif);
+//        DraweeController animatedGifController = Fresco.newDraweeControllerBuilder().setAutoPlayAnimations(true).setUri(Uri.parse("http://juheimg.oss-cn-hangzhou.aliyuncs.com/joke/201602/26/9CEC209CE521A3C710F151D1A7209823.gif")).build();
+//        mAnimatedGifView.setController(animatedGifController);
     }
 
     @Override
     public void initData() {
-        new Thread(getData).start();
+        tabSelection(1);
     }
 
-    private Runnable getData = new Runnable() {
-        @Override
-        public void run() {
-            volley();
+    private void hideFragments(FragmentTransaction transaction) {
+        if (mPicFragment != null) {
+            transaction.hide(mPicFragment);
         }
-    };
-
-    private void volley() {
-        long p = System.currentTimeMillis();
-        long m = p/1000;
-        String url = "http://japi.juhe.cn/joke/content/list.from?key=0387ce49ebf86da430611dc3e7c1a668&page=2&pagesize=10&sort=asc&time="+m;
-        VolleyRequest.RequestGet(this, url, "abcGet", new VolleyInterface(this, VolleyInterface.mListener,VolleyInterface.mErrorListener) {
-
-            @Override
-            public void onMySuccess(String result) {
-                // TODO Auto-generated method stub
-                Log.e("------->", result);
-            }
-
-            @Override
-            public void onMyError(VolleyError error) {
-                // TODO Auto-generated method stub
-
-            }
-        });
+        if (mJokerFragment != null) {
+            transaction.hide(mJokerFragment);
+        }
+        if (wechatFragment != null) {
+            transaction.hide(wechatFragment);
+        }
     }
 
+    private void tabSelection(int index) {
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        hideFragments(fragmentTransaction);
+        switch (index) {
+            case 1:
+                if (mJokerFragment == null) {
+                    mJokerFragment = new JokerFragment();
+                    fragmentTransaction.add(R.id.frame_layout, mJokerFragment);
+                } else {
+                    fragmentTransaction.show(mJokerFragment);
+                }
+                break;
+            case 2:
+                if (mPicFragment == null) {
+                    mPicFragment = new PicFragment();
+                    fragmentTransaction.add(R.id.frame_layout, mPicFragment);
+                } else {
+                    fragmentTransaction.show(mPicFragment);
+                }
+
+                break;
+            case 3: {
+//                mTvStation.setTextColor(Color.BLUE);
+                if (wechatFragment == null) {
+                    wechatFragment = new WechatFragment();
+                    fragmentTransaction.add(R.id.frame_layout, wechatFragment);
+                } else {
+                    fragmentTransaction.show(wechatFragment);
+                }
+                break;
+            }
+            case 4: {
+//                mTvTransfer.setTextColor(Color.BLUE);
+//                if (mTransferFragment == null) {
+//                    mTransferFragment = new TransferFragment();
+//                    fragmentTransaction.add(R.id.activity_content, mTransferFragment);
+//                } else {
+//                    fragmentTransaction.show(mTransferFragment);
+//                }
+                break;
+            }
+            default:
+                break;
+        }
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_1:
+                tabSelection(1);
+                break;
+            case R.id.tv_2:
+                tabSelection(2);
+                break;
+            case R.id.tv_3:
+                tabSelection(3);
+                break;
+            case R.id.tv_4:
+                tabSelection(4);
+                break;
+        }
+    }
 }

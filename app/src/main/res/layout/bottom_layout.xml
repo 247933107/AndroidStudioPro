@@ -6,24 +6,28 @@
     android:orientation="horizontal">
 
     <TextView
+        android:id="@+id/tv_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@mipmap/acw"
         android:gravity="center" />
 
     <TextView
+        android:id="@+id/tv_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@mipmap/acw"
         android:gravity="center" />
 
     <TextView
+        android:id="@+id/tv_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@mipmap/acw"
         android:gravity="center" />
 
     <TextView
+        android:id="@+id/tv_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@mipmap/acw"

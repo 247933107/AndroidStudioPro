@@ -9,16 +9,16 @@
 
     <include layout="@layout/app_top_bar"></include>
 
-    <!--<FrameLayout-->
-        <!--android:id="@+id/frame_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1" />-->
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/animated_gif"
+    <FrameLayout
+        android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        fresco:actualImageScaleType="fitCenter" />
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+    <!--<com.facebook.drawee.view.SimpleDraweeView-->
+        <!--android:id="@+id/animated_gif"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--fresco:actualImageScaleType="fitCenter" />-->
     <include layout="@layout/bottom_layout"></include>
 </LinearLayout>

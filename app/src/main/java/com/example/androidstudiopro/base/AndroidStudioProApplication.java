@@ -28,7 +28,7 @@ public class AndroidStudioProApplication extends Application {
         FLog.setMinimumLoggingLevel(FLog.VERBOSE);
         Set<RequestListener> listeners = new HashSet<>();
         listeners.add(new RequestLoggingListener());
-        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
+        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(app)
                 .setRequestListeners(listeners)
                 .setBitmapsConfig(Bitmap.Config.ARGB_8888)
                 .build();

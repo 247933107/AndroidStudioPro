@@ -10,6 +10,15 @@ public class Jokers implements Serializable {
     private String hashId;
     private String unixtime;
     private String updatetime;
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getContent() {
         return content;
