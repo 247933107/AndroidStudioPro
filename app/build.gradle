@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+//安卓构建过程需要配置的参数
+android {
+    compileSdkVersion 23 //编译版本
+    buildToolsVersion "23.0.2"//buildtools 版本
+//默认配置，会同时应用到debug和release版本上
+    defaultConfig {
+        applicationId "com.example.androidstudiopro"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        // 默认无渠道
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: ""]
+    }
+    signingConfigs {
+        //debug版本的签名配置,通常不用配，因为有默认的debug签名
+        debug {
+//            storeFile file(RELEASE_STOREFILE)
+//            storePassword RELEASE_STORE_PASSWORD
+//            keyAlias RELEASE_KEY_ALIAS
+//            keyPassword RELEASE_KEY_PASSWORD
+        }
+        release {
+            storeFile file(RELEASE_STOREFILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+    buildTypes {
+        debug {
+            // 显示Log
+//            buildConfigField "boolean", "LOG_DEBUG", "true"
+//            versionNameSuffix "-debug"
+//            minifyEnabled false
+//            zipAlignEnabled false
+//            shrinkResources false
+//            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            signingConfig signingConfigs.release//默认为debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = "AndroidStudioPro${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+
+    }
+    //多渠道打包
+    productFlavors {
+        open_qq {}
+        wandoujia {}
+        app_taobao {}
+        app_mi {}
+        app_jifeng {}
+        mumayi {}
+        yingyonghui {}
+        developer_huawei {}
+        app_meizu {}
+        app_qihu360 {}
+        app_oppo {}
+        app_baidu {}
+        app_sougou {}
+        app_wangyi {}
+        app_liantong {}
+    }
+
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+    compileOptions {//jdk版本
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.+'
+    compile 'com.facebook.fresco:fresco:0.9.0+'
+    compile files('libs/retrofit-2.0.0-beta4.jar')
+    compile files('libs/Volley.jar')
+}
