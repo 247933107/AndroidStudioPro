@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -56,9 +57,9 @@ public class PicFragment extends BaseFragment {
     private View mView;
     private Context mContext;
     private ListView mListView;
-    private PtrClassicFrameLayout mPtrClassicFrameLayout;
+//    private PtrClassicFrameLayout mPtrClassicFrameLayout;
     ListViewDataAdapter<Jokers> mAdapter;
-    private LoadMoreListViewContainer moreListViewContainer;
+//    private LoadMoreListViewContainer moreListViewContainer;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,57 +71,51 @@ public class PicFragment extends BaseFragment {
 
     private void initView() {
         mListView = (ListView) mView.findViewById(R.id.rotate_header_list_view);
-        mPtrClassicFrameLayout = (PtrClassicFrameLayout) mView.findViewById(R.id.rotate_header_list_view_frame);
-        moreListViewContainer = (LoadMoreListViewContainer) mView.findViewById(R.id.load_more_list_view_container);
-        mPtrClassicFrameLayout.setLastUpdateTimeRelateObject(this);
+//        mPtrClassicFrameLayout = (PtrClassicFrameLayout) mView.findViewById(R.id.rotate_header_list_view_frame);
+//        moreListViewContainer = (LoadMoreListViewContainer) mView.findViewById(R.id.load_more_list_view_container);
+//        mPtrClassicFrameLayout.setLastUpdateTimeRelateObject(this);
         mAdapter = new ListViewDataAdapter<Jokers>();
         mAdapter.setViewHolderClass(this, ViewHolder.class);
         mListView.setAdapter(mAdapter);
-        mPtrClassicFrameLayout.setPtrHandler(new PtrHandler() {
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                volley();
-            }
-
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
-            }
-        });
-        View headerMarginView = new View(mContext);
-        headerMarginView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dip2px(mContext,20)));
-        mListView.addHeaderView(headerMarginView);
-        mPtrClassicFrameLayout.setLoadingMinTime(1000);
-        mPtrClassicFrameLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPtrClassicFrameLayout.autoRefresh();
-            }
-        }, 100);
+//        mPtrClassicFrameLayout.setPtrHandler(new PtrHandler() {
+//            @Override
+//            public void onRefreshBegin(PtrFrameLayout frame) {
+//                volley();
+//            }
+//
+//            @Override
+//            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+//                return PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+//            }
+//        });
+//        View headerMarginView = new View(mContext);
+//        headerMarginView.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtil.dip2px(mContext,20)));
+//        mListView.addHeaderView(headerMarginView);
+//        mPtrClassicFrameLayout.setLoadingMinTime(1000);
+//        mPtrClassicFrameLayout.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mPtrClassicFrameLayout.autoRefresh();
+//            }
+//        }, 100);
         //////////////////////////////////////////////////////////////////////
-        moreListViewContainer.setLoadMoreHandler(new LoadMoreHandler() {
-            @Override
-            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-//                mDataModel.queryNextPage();
-            }
-        });
 
 
         // auto load data
-        mPtrClassicFrameLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPtrClassicFrameLayout.autoRefresh(false);
-            }
-        }, 150);
+//        mPtrClassicFrameLayout.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mPtrClassicFrameLayout.autoRefresh(false);
+//            }
+//        }, 150);
 
         volley();
     }
     private void volley() {
         long p = System.currentTimeMillis();
         long m = (p/1000)-37659294;
-        String url = "http://japi.juhe.cn/joke/img/text.from?key=0387ce49ebf86da430611dc3e7c1a668&page=1&pagesize=1";
-        VolleyRequest.RequestGet(mContext, url, "abcGet", new VolleyInterface(mContext, VolleyInterface.mListener,VolleyInterface.mErrorListener) {
+        String url = "http://japi.juhe.cn/joke/img/text.from?key=0387ce49ebf86da430611dc3e7c1a668&page=1&pagesize=10";
+        VolleyRequest.RequestGet(mContext, url, "kkkGet", new VolleyInterface(mContext, VolleyInterface.mListener,VolleyInterface.mErrorListener) {
 
             @Override
             public void onMySuccess(String result) {
@@ -135,15 +130,15 @@ public class PicFragment extends BaseFragment {
                         Jokers jo = new Jokers();
                         jo.setContent(ja.optJSONObject(i).optString("content"));
                         jo.setUpdatetime(ja.optJSONObject(i).optString("updatetime"));
-//                        jo.setUrl(ja.optJSONObject(i).optString("url"));
-                        jo.setUrl("http://juheimg.oss-cn-hangzhou.aliyuncs.com/joke/201602/26/8B935BAAFC27213E5471E56202CD4044.jpg");
+                        jo.setUrl(ja.optJSONObject(i).optString("url"));
+//                        jo.setUrl("http://juheimg.oss-cn-hangzhou.aliyuncs.com/joke/201602/26/8B935BAAFC27213E5471E56202CD4044.jpg");
                         jss.add(jo);
                     }
                     mAdapter.getDataList().addAll(jss);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                mPtrClassicFrameLayout.refreshComplete();
+//                mPtrClassicFrameLayout.refreshComplete();
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -157,13 +152,13 @@ public class PicFragment extends BaseFragment {
     private class ViewHolder extends ViewHolderBase<Jokers>{
         TextView mContent;
         TextView mTitle;
-        SimpleDraweeView mSimpleDraweeView;
+        ImageView mSimpleDraweeView;
         @Override
         public View createView(LayoutInflater layoutInflater) {
             View v = layoutInflater.inflate(R.layout.pic_layout, null);
             mContent = (TextView)v.findViewById(R.id.content_s);
             mTitle = (TextView) v.findViewById(R.id.time_s);
-            mSimpleDraweeView = (SimpleDraweeView) v.findViewById(R.id.animated_gif);
+            mSimpleDraweeView = (ImageView) v.findViewById(R.id.iamge_view);
             return v;
         }
 
@@ -171,14 +166,14 @@ public class PicFragment extends BaseFragment {
         public void showData(int position, Jokers itemData) {
             mContent.setText(itemData.getContent());
             mTitle.setText(itemData.getUpdatetime());
-            if (!TextUtils.isEmpty(itemData.getUrl())){
-                if (itemData.getUrl().endsWith(".gif")){
-                    DraweeController animatedGifController = Fresco.newDraweeControllerBuilder().setAutoPlayAnimations(true).setUri(Uri.parse(itemData.getUrl())).build();
-                    mSimpleDraweeView.setController(animatedGifController);
-                }else {
-                    mSimpleDraweeView.setImageURI(Uri.parse(itemData.getUrl()));
-                }
-            }
+//            if (!TextUtils.isEmpty(itemData.getUrl())){
+//                if (itemData.getUrl().endsWith(".gif")){
+//                    DraweeController animatedGifController = Fresco.newDraweeControllerBuilder().setAutoPlayAnimations(true).setUri(Uri.parse(itemData.getUrl())).build();
+//                    mSimpleDraweeView.setController(animatedGifController);
+//                }else {
+//                    mSimpleDraweeView.setImageURI(Uri.parse(itemData.getUrl()));
+//                }
+//            }
         }
     }
 }

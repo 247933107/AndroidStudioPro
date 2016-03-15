@@ -10,9 +10,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.MainActivity">
-
-        </activity>
+        <activity android:name=".main.MainActivity"/>
+        <activity android:name=".main.ui.WebViewActivity"/>
         <activity android:name="com.example.androidstudiopro.main.InitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

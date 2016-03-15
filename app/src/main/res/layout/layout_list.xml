@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg"
+    android:background="#ffffff"
     android:orientation="vertical">
 
     <TextView
@@ -13,7 +13,7 @@
 
     <TextView
         android:id="@+id/time"
-        android:textColor="#fa0628"
+        android:textColor="#ebeaea"
         android:textSize="14sp"
         android:gravity="right"
         android:layout_width="match_parent"
