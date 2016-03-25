@@ -46,17 +46,8 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-//            signingConfig signingConfigs.release//默认为debug
+            signingConfig signingConfigs.release//默认为debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            applicationVariants.all { variant ->
-//                variant.outputs.each { output ->
-//                    def outputFile = output.outputFile
-//                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-//                        def fileName = "AndroidStudioPro${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
-//                        output.outputFile = new File(outputFile.parent, fileName)
-//                    }
-//                }
-//            }
         }
 
     }
@@ -78,7 +69,15 @@ android {
         app_wangyi {}
         app_liantong {}
     }
-
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = "AndroidStudioPro${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
     productFlavors.all { flavor ->
         flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
@@ -95,6 +94,7 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.9.0+'
 //    compile files('libs/retrofit-2.0.0-beta4.jar')
     compile files('libs/Volley.jar')
+    compile files('fastjson-1.1.15.jar')
     compile files('libs/universal-image-loader-1.9.5.jar')
     compile project(path: ':ptr-lib')
 }

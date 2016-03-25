@@ -18,7 +18,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private JokerFragment mJokerFragment;
     private PicFragment mPicFragment;
     private WechatFragment wechatFragment;
-    private TextView tv_1, tv_2, tv_3, tv_4;
+    private TextView tv_1, tv_2, tv_3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +32,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tv_1 = (TextView) findViewById(R.id.tv_1);
         tv_2 = (TextView) findViewById(R.id.tv_2);
         tv_3 = (TextView) findViewById(R.id.tv_3);
-        tv_4 = (TextView) findViewById(R.id.tv_4);
         tv_1.setOnClickListener(this);
         tv_2.setOnClickListener(this);
         tv_3.setOnClickListener(this);
-        tv_4.setOnClickListener(this);
 
 
 //        mAnimatedGifView = (SimpleDraweeView) findViewById(R.id.animated_gif);
@@ -92,16 +90,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 break;
             }
-            case 4: {
-//                mTvTransfer.setTextColor(Color.BLUE);
-//                if (mTransferFragment == null) {
-//                    mTransferFragment = new TransferFragment();
-//                    fragmentTransaction.add(R.id.activity_content, mTransferFragment);
-//                } else {
-//                    fragmentTransaction.show(mTransferFragment);
-//                }
-                break;
-            }
             default:
                 break;
         }
@@ -119,9 +107,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.tv_3:
                 tabSelection(3);
-                break;
-            case R.id.tv_4:
-                tabSelection(4);
                 break;
         }
     }

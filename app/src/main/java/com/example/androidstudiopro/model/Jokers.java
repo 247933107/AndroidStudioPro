@@ -11,7 +11,9 @@ public class Jokers implements Serializable {
     private String unixtime;
     private String updatetime;
     private String url;
+    public Jokers(){
 
+    }
     public String getUrl() {
         return url;
     }
